@@ -1,0 +1,23 @@
+            steps:
+              - step:
+                  identifier: install_java
+                  name: intall java version 17
+                  type: Action
+                  spec:
+                    uses: actions/setup-java@v3
+                    with:
+                      distribution: 'temurin'
+                      java-version: '16'
+              - step:
+                  identifier: java_ver_check
+                  name: java version check
+                  type: Run
+                  spec:
+                    shell: Bash
+                    command: |
+                      JAVA_VER=$(java -version 2>&1 | head -1 | cut -d'"' -f2 | sed '/^1\./s///' | cut -d'.' -f1)
+                      if [[ $JAVA_VER == 16 ]]; then
+                        echo successfully installed $JAVA_VER
+                      else
+                        exit 1
+                      fi
